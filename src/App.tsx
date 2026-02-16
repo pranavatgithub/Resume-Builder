@@ -1,6 +1,5 @@
-import React, { useRef } from 'react';
+
 import { Sidebar } from './components/editor/Sidebar';
-import { ResumePreview } from './components/preview/ResumePreview';
 import { Download, FileDown, Upload, RefreshCw } from 'lucide-react';
 import { useResumeStore } from './store/useResumeStore';
 import { PDFDownloadLink, PDFViewer } from '@react-pdf/renderer';
@@ -9,7 +8,6 @@ import { ResumePDF } from './components/preview/ResumePDF';
 import { useDebounce } from './hooks/useDebounce';
 
 function App() {
-  const previewRef = useRef<HTMLDivElement>(null);
   const { resumes, selectedResumeId, setResume, resetResume } = useResumeStore();
   const resume = resumes.find(r => r.id === selectedResumeId);
   const debouncedResume = useDebounce(resume, 1000);
