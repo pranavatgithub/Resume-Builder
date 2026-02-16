@@ -170,25 +170,25 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                     <View style={styles.contactRow}>
                         {profile.phone && (
                             <View style={styles.contactItem}>
-                                <Image src="/icons/phone.png" style={styles.contactIcon} />
+                                <Image src={`${import.meta.env.BASE_URL}icons/phone.png`} style={styles.contactIcon} />
                                 <Text style={styles.contactText}>{profile.phone}</Text>
                             </View>
                         )}
                         {profile.email && (
                             <View style={styles.contactItem}>
-                                <Image src="/icons/email.png" style={styles.contactIcon} />
+                                <Image src={`${import.meta.env.BASE_URL}icons/email.png`} style={styles.contactIcon} />
                                 <Text style={styles.contactText}>{profile.email}</Text>
                             </View>
                         )}
                         {profile.location && (
                             <View style={styles.contactItem}>
-                                <Image src="/icons/location.png" style={styles.contactIcon} />
+                                <Image src={`${import.meta.env.BASE_URL}icons/location.png`} style={styles.contactIcon} />
                                 <Text style={styles.contactText}>{profile.location}</Text>
                             </View>
                         )}
                         {profile.linkedin && (
                             <View style={styles.contactItem}>
-                                <Image src="/icons/link.png" style={styles.contactIcon} />
+                                <Image src={`${import.meta.env.BASE_URL}icons/link.png`} style={styles.contactIcon} />
                                 <Text style={styles.contactText}>linkedin.com</Text>
                             </View>
                         )}
