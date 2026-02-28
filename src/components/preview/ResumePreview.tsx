@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
-// import clsx from 'clsx';
+
 import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
 
 // Spacer component for PDF-safe spacing
@@ -111,11 +111,28 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                                 <div className="space-y-4">
                                     {education.map((edu) => (
                                         <div key={edu.id}>
-                                            <div className="flex justify-between items-baseline mb-1">
-                                                <h4 className="font-bold text-gray-900 leading-tight">{edu.degree}</h4>
-                                                <span className="text-xs text-gray-500 font-medium whitespace-nowrap">{edu.startDate} - {edu.endDate}</span>
+                                            <div className="flex flex-col mb-1">
+                                                <h4 className="font-bold text-gray-900 leading-tight mb-1">{edu.degree}</h4>
+                                                <div className="text-blue-600 text-sm font-medium mb-1">{edu.institution}</div>
+
+                                                <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium">
+                                                    <div className="flex items-center">
+                                                        <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                                                            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" />
+                                                        </svg>
+                                                        <span>{edu.startDate} - {edu.endDate}</span>
+                                                    </div>
+
+                                                    {edu.location && (
+                                                        <div className="flex items-center">
+                                                            <svg className="w-3 h-3 mr-1" viewBox="0 0 24 24" fill="currentColor">
+                                                                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                                                            </svg>
+                                                            <span>{edu.location}</span>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </div>
-                                            <div className="text-blue-600 text-sm font-medium">{edu.institution}, <span className="text-gray-600 font-normal">{edu.location}</span></div>
                                         </div>
                                     ))}
                                 </div>

@@ -5,6 +5,7 @@ export interface Profile {
     phone: string;
     location: string;
     linkedin?: string;
+    github?: string;
     website?: string;
     summary: string;
 }
@@ -36,7 +37,14 @@ export interface Skill {
     items: string[];
 }
 
-export type SectionType = 'profile' | 'summary' | 'experience' | 'education' | 'skills' | 'custom';
+export interface Project {
+    id: string;
+    name: string;
+    description: string[];
+    techStack: string;
+}
+
+export type SectionType = 'profile' | 'summary' | 'experience' | 'education' | 'skills' | 'projects' | 'custom';
 
 export interface ResumeData {
     id: string;
@@ -45,6 +53,7 @@ export interface ResumeData {
     experience: Experience[];
     education: Education[];
     skills: Skill[];
+    projects: Project[];
     createdAt: number;
     updatedAt: number;
 }

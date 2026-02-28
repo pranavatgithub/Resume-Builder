@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ResumeData, Experience, Education, Skill, Profile } from '../types/resume';
+import type { ResumeData, Experience, Education, Skill, Profile, Project } from '../types/resume';
 import { v4 as uuidv4 } from 'uuid';
 
 interface ResumeState {
@@ -29,6 +29,10 @@ interface ResumeState {
     updateSkill: (id: string, skill: Partial<Skill>) => void;
     removeSkill: (id: string) => void;
 
+    addProject: () => void;
+    updateProject: (id: string, project: Partial<Project>) => void;
+    removeProject: (id: string) => void;
+
     setResume: (data: ResumeData) => void;
     resetResume: () => void;
 }
@@ -44,11 +48,13 @@ const initialResume: ResumeData = {
         location: 'City, Country',
         summary: 'Brief professional summary...',
         linkedin: '',
+        github: '',
         website: '',
     },
     experience: [],
     education: [],
     skills: [],
+    projects: [],
     createdAt: Date.now(),
     updatedAt: Date.now(),
 };
@@ -299,6 +305,52 @@ export const useResumeStore = create<ResumeState>()(
                             ? {
                                 ...r,
                                 skills: r.skills.filter((s) => s.id !== id),
+                            }
+                            : r
+                    ),
+                })),
+
+            addProject: () =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                projects: [
+                                    ...(r.projects || []),
+                                    {
+                                        id: uuidv4(),
+                                        name: '',
+                                        description: [],
+                                        techStack: '',
+                                    },
+                                ],
+                            }
+                            : r
+                    ),
+                })),
+
+            updateProject: (id, project) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                projects: (r.projects || []).map((p) =>
+                                    p.id === id ? { ...p, ...project } : p
+                                ),
+                            }
+                            : r
+                    ),
+                })),
+
+            removeProject: (id) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                projects: (r.projects || []).filter((p) => p.id !== id),
                             }
                             : r
                     ),

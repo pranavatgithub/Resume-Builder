@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
-import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ResumeList } from './ResumeList';
 
@@ -30,7 +30,10 @@ export const Sidebar = () => {
         removeEducation,
         addSkill,
         updateSkill,
-        removeSkill
+        removeSkill,
+        addProject,
+        updateProject,
+        removeProject
     } = useResumeStore();
 
     const resume = resumes.find(r => r.id === selectedResumeId);
@@ -44,7 +47,7 @@ export const Sidebar = () => {
     if (!resume) {
         return (
             <div className="w-full h-full p-6 text-zinc-400">
-                <h2 className="text-xl font-bold mb-6 text-white tracking-tight">Editor</h2>
+                <h2 className="text-xl font-bold mb-6 text-white tracking-tight">Resume Builder</h2>
                 <ResumeList />
                 <div className="mt-8 text-center text-zinc-500 text-sm">
                     Select or create a resume to start editing.
@@ -58,7 +61,7 @@ export const Sidebar = () => {
 
     return (
         <div className="w-full h-full overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
-            <h2 className="text-xl font-bold mb-6 text-white tracking-tight">Editor</h2>
+            <h2 className="text-xl font-bold mb-6 text-white tracking-tight">Resume Builder</h2>
             <ResumeList />
 
             {/* Profile Section */}
@@ -218,6 +221,71 @@ export const Sidebar = () => {
                 </AnimatePresence>
             </div>
 
+            {/* Projects Section */}
+            <div className="mb-4">
+                <SectionHeader
+                    title="Projects"
+                    icon={Code}
+                    isOpen={activeSection === 'projects'}
+                    onClick={() => toggleSection('projects')}
+                />
+                <AnimatePresence>
+                    {activeSection === 'projects' && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="space-y-4 mb-4">
+                                {(resume.projects || []).map((project, index) => (
+                                    <div
+                                        key={project.id}
+                                        className="p-4 bg-zinc-800/20 rounded-lg border border-white/5 hover:border-white/10 transition-colors"
+                                    >
+                                        <div className="flex justify-between items-start mb-3">
+                                            <h4 className="font-medium text-zinc-200 text-sm">Project #{index + 1}</h4>
+                                            <button
+                                                onClick={() => removeProject(project.id)}
+                                                className="text-zinc-500 hover:text-red-400 transition-colors"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <input
+                                                placeholder="Project Name"
+                                                value={project.name}
+                                                onChange={(e) => updateProject(project.id, { name: e.target.value })}
+                                                className={inputClasses}
+                                            />
+                                            <input
+                                                placeholder="Tech Stack (e.g., React, Node.js)"
+                                                value={project.techStack}
+                                                onChange={(e) => updateProject(project.id, { techStack: e.target.value })}
+                                                className={inputClasses}
+                                            />
+                                            <textarea
+                                                placeholder="Description (one item per line)"
+                                                value={Array.isArray(project.description) ? project.description.join('\n') : project.description || ''}
+                                                onChange={(e) => updateProject(project.id, { description: e.target.value.split('\n') })}
+                                                className={`${inputClasses} h-24 resize-none`}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={addProject}
+                                className="w-full py-2.5 flex items-center justify-center gap-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 border border-blue-500/20 transition-all font-medium text-sm"
+                            >
+                                <Plus size={16} /> Add Project
+                            </button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
             {/* Education Section */}
             <div className="mb-4">
                 <SectionHeader
@@ -260,6 +328,12 @@ export const Sidebar = () => {
                                                 placeholder="Degree"
                                                 value={edu.degree}
                                                 onChange={(e) => updateEducation(edu.id, { degree: e.target.value })}
+                                                className={inputClasses}
+                                            />
+                                            <input
+                                                placeholder="Location"
+                                                value={edu.location}
+                                                onChange={(e) => updateEducation(edu.id, { location: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <div className="grid grid-cols-2 gap-3">
@@ -339,6 +413,61 @@ export const Sidebar = () => {
                             >
                                 <Plus size={16} /> Add Skill Category
                             </button>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Links Section */}
+            <div className="mb-4">
+                <SectionHeader
+                    title="Links"
+                    icon={Link}
+                    isOpen={activeSection === 'links'}
+                    onClick={() => toggleSection('links')}
+                />
+                <AnimatePresence>
+                    {activeSection === 'links' && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="p-4 space-y-4 bg-zinc-800/20 rounded-lg border border-white/5 mb-2">
+                                <div className="grid grid-cols-2 gap-4">
+                                    <div>
+                                        <label className={labelClasses}>LinkedIn</label>
+                                        <input
+                                            type="text"
+                                            placeholder="linkedin.com/in/username"
+                                            value={resume.profile.linkedin || ''}
+                                            onChange={(e) => updateProfile({ linkedin: e.target.value })}
+                                            className={inputClasses}
+                                        />
+                                    </div>
+                                    <div>
+                                        <label className={labelClasses}>GitHub</label>
+                                        <input
+                                            type="text"
+                                            placeholder="github.com/username"
+                                            value={resume.profile.github || ''}
+                                            onChange={(e) => updateProfile({ github: e.target.value })}
+                                            className={inputClasses}
+                                        />
+                                    </div>
+                                    <div className="col-span-2">
+                                        <label className={labelClasses}>Website / Portfolio</label>
+                                        <input
+                                            type="text"
+                                            placeholder="yourwebsite.com"
+                                            value={resume.profile.website || ''}
+                                            onChange={(e) => updateProfile({ website: e.target.value })}
+                                            className={inputClasses}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
                         </motion.div>
                     )}
                 </AnimatePresence>

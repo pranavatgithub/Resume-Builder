@@ -61,10 +61,10 @@ function App() {
               <Upload size={16} /> Import JSON
               <input type="file" accept=".json" onChange={handleImportJSON} className="hidden" />
             </label>
-            <button onClick={handleExportJSON} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded text-sm transition-colors border border-white/10">
+            <button onClick={handleExportJSON} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded cursor-pointer text-sm transition-colors border border-white/10">
               <FileDown size={16} /> Export JSON
             </button>
-            <button onClick={resetResume} className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded text-sm transition-colors border border-red-500/20">
+            <button onClick={resetResume} className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded cursor-pointer text-sm transition-colors border border-red-500/20">
               <RefreshCw size={16} /> Reset
             </button>
 
@@ -90,8 +90,7 @@ function App() {
 
           {debouncedResume && (
             <div className="w-[210mm] h-[297mm] shadow-2xl shrink-0">
-              <div className="text-white mb-2 font-bold text-center">PDF Viewer (Debug)</div>
-              <PDFViewer width="100%" height="100%" className="rounded-lg" showToolbar={true}>
+              <PDFViewer width="100%" height="100%" className="rounded-lg" showToolbar={false}>
                 <ResumePDF resume={debouncedResume} />
               </PDFViewer>
             </div>

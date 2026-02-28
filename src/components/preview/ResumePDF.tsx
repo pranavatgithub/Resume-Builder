@@ -1,5 +1,5 @@
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Image, type Styles } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Svg, Path, type Styles } from '@react-pdf/renderer';
 import type { ResumeData } from '../../types/resume';
 
 const styles: Styles = StyleSheet.create({
@@ -104,7 +104,7 @@ const styles: Styles = StyleSheet.create({
     },
     itemSubtitle: {
         fontSize: 9,
-        color: '#2563EB', // blue-600
+        color: '#1e90ff', // blue-600
         fontWeight: 500,
         marginBottom: 4,
     },
@@ -150,6 +150,15 @@ const styles: Styles = StyleSheet.create({
         color: '#374151', // gray-700
         fontWeight: 500,
     },
+    footer: {
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 8,
+        color: '#9CA3AF', // gray-400
+    },
 });
 
 interface ResumePDFProps {
@@ -157,7 +166,7 @@ interface ResumePDFProps {
 }
 
 export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
-    const { profile, experience, education, skills } = resume;
+    const { profile, experience, education, skills, projects = [] } = resume;
 
     return (
         <Document>
@@ -170,26 +179,26 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                     <View style={styles.contactRow}>
                         {profile.phone && (
                             <View style={styles.contactItem}>
-                                <Image src={`${import.meta.env.BASE_URL}icons/phone.png`} style={styles.contactIcon} />
+                                <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                    <Path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" fill="#4B5563" />
+                                </Svg>
                                 <Text style={styles.contactText}>{profile.phone}</Text>
                             </View>
                         )}
                         {profile.email && (
                             <View style={styles.contactItem}>
-                                <Image src={`${import.meta.env.BASE_URL}icons/email.png`} style={styles.contactIcon} />
+                                <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                    <Path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#4B5563" />
+                                </Svg>
                                 <Text style={styles.contactText}>{profile.email}</Text>
                             </View>
                         )}
                         {profile.location && (
                             <View style={styles.contactItem}>
-                                <Image src={`${import.meta.env.BASE_URL}icons/location.png`} style={styles.contactIcon} />
+                                <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                    <Path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#4B5563" />
+                                </Svg>
                                 <Text style={styles.contactText}>{profile.location}</Text>
-                            </View>
-                        )}
-                        {profile.linkedin && (
-                            <View style={styles.contactItem}>
-                                <Image src={`${import.meta.env.BASE_URL}icons/link.png`} style={styles.contactIcon} />
-                                <Text style={styles.contactText}>linkedin.com</Text>
                             </View>
                         )}
                     </View>
@@ -233,23 +242,34 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                             </View>
                         )}
 
-                        {/* Education */}
-                        {education.length > 0 && (
+                        {/* Projects */}
+                        {projects.length > 0 && (
                             <View style={styles.section}>
-                                <Text style={styles.sectionTitle}>Education</Text>
-                                {education.map((edu) => (
-                                    <View key={edu.id} style={styles.item}>
+                                <Text style={styles.sectionTitle}>Projects</Text>
+                                {projects.map((project) => (
+                                    <View key={project.id} style={styles.item}>
                                         <View style={styles.itemHeader}>
-                                            <Text style={styles.itemTitle}>{edu.degree}</Text>
-                                            <Text style={styles.itemDate}>{edu.startDate} - {edu.endDate}</Text>
+                                            <Text style={styles.itemTitle}>{project.name}</Text>
                                         </View>
-                                        <Text style={styles.itemSubtitle}>
-                                            {edu.institution}, <Text style={styles.itemSubtitleGray}>{edu.location}</Text>
-                                        </Text>
+                                        <View style={styles.list}>
+                                            {(Array.isArray(project.description) ? project.description : (project.description ? [project.description] : [])).map((desc, i) => (
+                                                <View key={i} style={styles.listItem}>
+                                                    <View style={styles.bulletPoint} />
+                                                    <Text style={styles.text}>{desc}</Text>
+                                                </View>
+                                            ))}
+                                        </View>
+                                        {project.techStack ? (
+                                            <Text style={[styles.itemSubtitle, { marginTop: 4, color: '#374151', fontSize: 8 }]}>
+                                                <Text style={{ fontWeight: 700 }}>Tech Stack: </Text>
+                                                <Text style={{ fontWeight: 400 }}>{project.techStack}</Text>
+                                            </Text>
+                                        ) : null}
                                     </View>
                                 ))}
                             </View>
                         )}
+
                     </View>
 
                     {/* Right Column */}
@@ -274,8 +294,73 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                                 </View>
                             </View>
                         )}
+
+                        {/* Education */}
+                        {education.length > 0 && (
+                            <View style={styles.section}>
+                                <Text style={styles.sectionTitle}>Education</Text>
+                                {education.map((edu) => (
+                                    <View key={edu.id} style={[styles.item, { marginBottom: 8 }]}>
+                                        <Text style={[styles.itemTitle, { fontSize: 10, marginBottom: 1 }]}>{edu.degree}</Text>
+                                        <Text style={[styles.itemSubtitle, { fontSize: 9, marginBottom: 4 }]}>{edu.institution}</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                <Svg viewBox="0 0 24 24" style={{ width: 10, height: 10, marginRight: 4 }}>
+                                                    <Path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2z" fill="#6B7280" />
+                                                </Svg>
+                                                <Text style={[styles.itemDate, { fontSize: 9 }]}>{edu.startDate} - {edu.endDate}</Text>
+                                            </View>
+                                            {edu.location && (
+                                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                                    <Svg viewBox="0 0 24 24" style={{ width: 10, height: 10, marginRight: 4 }}>
+                                                        <Path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" fill="#6B7280" />
+                                                    </Svg>
+                                                    <Text style={[styles.itemDate, { fontSize: 9 }]}>{edu.location}</Text>
+                                                </View>
+                                            )}
+                                        </View>
+                                    </View>
+                                ))}
+                            </View>
+                        )}
+
+                        {/* Links/Portfolios */}
+                        {(profile.linkedin || profile.github || profile.website) && (
+                            <View style={styles.section}>
+                                <Text style={styles.sectionTitle}>Links</Text>
+                                {profile.linkedin && (
+                                    <View style={[styles.contactItem, { marginBottom: 6 }]}>
+                                        <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                            <Path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" fill="#4B5563" />
+                                        </Svg>
+                                        <Text style={styles.contactText}>{profile.linkedin}</Text>
+                                    </View>
+                                )}
+                                {profile.github && (
+                                    <View style={[styles.contactItem, { marginBottom: 6 }]}>
+                                        <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                            <Path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" fill="#4B5563" />
+                                        </Svg>
+                                        <Text style={styles.contactText}>{profile.github}</Text>
+                                    </View>
+                                )}
+                                {profile.website && (
+                                    <View style={styles.contactItem}>
+                                        <Svg viewBox="0 0 24 24" style={styles.contactIcon}>
+                                            <Path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z" fill="#4B5563" />
+                                        </Svg>
+                                        <Text style={styles.contactText}>{profile.website}</Text>
+                                    </View>
+                                )}
+                            </View>
+                        )}
                     </View>
                 </View>
+
+                {/* Footer */}
+                <Text style={styles.footer}>
+                    Powered by <Text style={{ color: '#1e90ff' }}>https://pranavatgithub.github.io/Resume-Builder</Text>
+                </Text>
             </Page>
         </Document>
     );
