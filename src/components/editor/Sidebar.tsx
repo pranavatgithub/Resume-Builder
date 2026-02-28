@@ -169,6 +169,7 @@ export const Sidebar = () => {
                                             <button
                                                 onClick={() => removeExperience(exp.id)}
                                                 className="text-zinc-500 hover:text-red-400 transition-colors"
+                                                aria-label="Remove Experience"
                                             >
                                                 <Trash2 size={14} />
                                             </button>
@@ -248,6 +249,7 @@ export const Sidebar = () => {
                                             <button
                                                 onClick={() => removeProject(project.id)}
                                                 className="text-zinc-500 hover:text-red-400 transition-colors"
+                                                aria-label="Remove Project"
                                             >
                                                 <Trash2 size={14} />
                                             </button>
@@ -313,6 +315,7 @@ export const Sidebar = () => {
                                             <button
                                                 onClick={() => removeEducation(edu.id)}
                                                 className="text-zinc-500 hover:text-red-400 transition-colors"
+                                                aria-label="Remove Education"
                                             >
                                                 <Trash2 size={14} />
                                             </button>
@@ -394,6 +397,7 @@ export const Sidebar = () => {
                                             <button
                                                 onClick={() => removeSkill(skill.id)}
                                                 className="text-zinc-500 hover:text-red-400 transition-colors"
+                                                aria-label="Remove Skill Classification"
                                             >
                                                 <Trash2 size={14} />
                                             </button>

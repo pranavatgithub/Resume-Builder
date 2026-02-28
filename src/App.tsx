@@ -57,15 +57,15 @@ function App() {
             Live Preview
           </div>
           <div className="flex items-center gap-3">
-            <label className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded cursor-pointer text-sm transition-colors border border-white/10">
-              <Upload size={16} /> Import JSON
+            <label aria-label="Import JSON" className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded cursor-pointer text-sm transition-colors border border-white/10">
+              <Upload size={16} aria-hidden="true" /> Import JSON
               <input type="file" accept=".json" onChange={handleImportJSON} className="hidden" />
             </label>
-            <button onClick={handleExportJSON} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded cursor-pointer text-sm transition-colors border border-white/10">
-              <FileDown size={16} /> Export JSON
+            <button aria-label="Export JSON" onClick={handleExportJSON} className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded cursor-pointer text-sm transition-colors border border-white/10">
+              <FileDown size={16} aria-hidden="true" /> Export JSON
             </button>
-            <button onClick={resetResume} className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded cursor-pointer text-sm transition-colors border border-red-500/20">
-              <RefreshCw size={16} /> Reset
+            <button aria-label="Reset Resume Data" onClick={resetResume} className="flex items-center gap-2 px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded cursor-pointer text-sm transition-colors border border-red-500/20">
+              <RefreshCw size={16} aria-hidden="true" /> Reset
             </button>
 
             {debouncedResume && (
@@ -73,10 +73,11 @@ function App() {
                 document={<ResumePDF resume={debouncedResume} />}
                 fileName={`${debouncedResume.profile.fullName.replace(' ', '_')}_Resume.pdf`}
                 className="flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white font-medium rounded text-sm transition-colors shadow-lg shadow-blue-900/20"
+                aria-label="Download PDF"
               >
                 {({ loading }) => (
                   <>
-                    <Download size={16} /> {loading ? 'Preparing...' : 'Download PDF'}
+                    <Download size={16} aria-hidden="true" /> {loading ? 'Preparing...' : 'Download PDF'}
                   </>
                 )}
               </PDFDownloadLink>
