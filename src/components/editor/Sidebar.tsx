@@ -82,8 +82,9 @@ export const Sidebar = () => {
                         >
                             <div className="p-4 space-y-4 bg-zinc-800/20 rounded-lg border border-white/5 mb-2">
                                 <div>
-                                    <label className={labelClasses}>Full Name</label>
+                                    <label htmlFor="fullName" className={labelClasses}>Full Name</label>
                                     <input
+                                        id="fullName"
                                         type="text"
                                         value={resume.profile.fullName}
                                         onChange={(e) => updateProfile({ fullName: e.target.value })}
@@ -91,8 +92,9 @@ export const Sidebar = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className={labelClasses}>Title</label>
+                                    <label htmlFor="title" className={labelClasses}>Title</label>
                                     <input
+                                        id="title"
                                         type="text"
                                         value={resume.profile.title}
                                         onChange={(e) => updateProfile({ title: e.target.value })}
@@ -101,8 +103,9 @@ export const Sidebar = () => {
                                 </div>
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
-                                        <label className={labelClasses}>Email</label>
+                                        <label htmlFor="email" className={labelClasses}>Email</label>
                                         <input
+                                            id="email"
                                             type="email"
                                             value={resume.profile.email}
                                             onChange={(e) => updateProfile({ email: e.target.value })}
@@ -110,8 +113,9 @@ export const Sidebar = () => {
                                         />
                                     </div>
                                     <div>
-                                        <label className={labelClasses}>Phone</label>
+                                        <label htmlFor="phone" className={labelClasses}>Phone</label>
                                         <input
+                                            id="phone"
                                             type="text"
                                             value={resume.profile.phone}
                                             onChange={(e) => updateProfile({ phone: e.target.value })}
@@ -120,8 +124,9 @@ export const Sidebar = () => {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className={labelClasses}>Location</label>
+                                    <label htmlFor="location" className={labelClasses}>Location</label>
                                     <input
+                                        id="location"
                                         type="text"
                                         value={resume.profile.location}
                                         onChange={(e) => updateProfile({ location: e.target.value })}
@@ -129,8 +134,9 @@ export const Sidebar = () => {
                                     />
                                 </div>
                                 <div>
-                                    <label className={labelClasses}>Summary</label>
+                                    <label htmlFor="summary" className={labelClasses}>Summary</label>
                                     <textarea
+                                        id="summary"
                                         value={resume.profile.summary}
                                         onChange={(e) => updateProfile({ summary: e.target.value })}
                                         className={`${inputClasses} h-32 resize-none`}
@@ -176,33 +182,33 @@ export const Sidebar = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <input
-                                                placeholder="Job Title"
+                                                placeholder="Job Title" aria-label="Job Title"
                                                 value={exp.title}
                                                 onChange={(e) => updateExperience(exp.id, { title: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <input
-                                                placeholder="Company"
+                                                placeholder="Company" aria-label="Company"
                                                 value={exp.company}
                                                 onChange={(e) => updateExperience(exp.id, { company: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <div className="grid grid-cols-2 gap-3">
                                                 <input
-                                                    placeholder="Start Date"
+                                                    placeholder="Start Date" aria-label="Start Date"
                                                     value={exp.startDate}
                                                     onChange={(e) => updateExperience(exp.id, { startDate: e.target.value })}
                                                     className={inputClasses}
                                                 />
                                                 <input
-                                                    placeholder="End Date"
+                                                    placeholder="End Date" aria-label="End Date"
                                                     value={exp.endDate}
                                                     onChange={(e) => updateExperience(exp.id, { endDate: e.target.value })}
                                                     className={inputClasses}
                                                 />
                                             </div>
                                             <textarea
-                                                placeholder="Description (one item per line)"
+                                                placeholder="Description (one item per line)" aria-label="Description (one item per line)"
                                                 value={Array.isArray(exp.description) ? exp.description.join('\n') : exp.description}
                                                 onChange={(e) => updateExperience(exp.id, { description: e.target.value.split('\n') })}
                                                 className={`${inputClasses} h-24 resize-none`}
@@ -256,19 +262,19 @@ export const Sidebar = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <input
-                                                placeholder="Project Name"
+                                                placeholder="Project Name" aria-label="Project Name"
                                                 value={project.name}
                                                 onChange={(e) => updateProject(project.id, { name: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <input
-                                                placeholder="Tech Stack (e.g., React, Node.js)"
+                                                placeholder="Tech Stack (e.g., React, Node.js)" aria-label="Tech Stack (e.g., React, Node.js)"
                                                 value={project.techStack}
                                                 onChange={(e) => updateProject(project.id, { techStack: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <textarea
-                                                placeholder="Description (one item per line)"
+                                                placeholder="Description (one item per line)" aria-label="Description (one item per line)"
                                                 value={Array.isArray(project.description) ? project.description.join('\n') : project.description || ''}
                                                 onChange={(e) => updateProject(project.id, { description: e.target.value.split('\n') })}
                                                 className={`${inputClasses} h-24 resize-none`}
@@ -322,32 +328,32 @@ export const Sidebar = () => {
                                         </div>
                                         <div className="space-y-3">
                                             <input
-                                                placeholder="School / University"
+                                                placeholder="School / University" aria-label="School / University"
                                                 value={edu.institution}
                                                 onChange={(e) => updateEducation(edu.id, { institution: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <input
-                                                placeholder="Degree"
+                                                placeholder="Degree" aria-label="Degree"
                                                 value={edu.degree}
                                                 onChange={(e) => updateEducation(edu.id, { degree: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <input
-                                                placeholder="Location"
+                                                placeholder="Location" aria-label="Location"
                                                 value={edu.location}
                                                 onChange={(e) => updateEducation(edu.id, { location: e.target.value })}
                                                 className={inputClasses}
                                             />
                                             <div className="grid grid-cols-2 gap-3">
                                                 <input
-                                                    placeholder="Start Date"
+                                                    placeholder="Start Date" aria-label="Start Date"
                                                     value={edu.startDate}
                                                     onChange={(e) => updateEducation(edu.id, { startDate: e.target.value })}
                                                     className={inputClasses}
                                                 />
                                                 <input
-                                                    placeholder="End Date"
+                                                    placeholder="End Date" aria-label="End Date"
                                                     value={edu.endDate}
                                                     onChange={(e) => updateEducation(edu.id, { endDate: e.target.value })}
                                                     className={inputClasses}
@@ -389,7 +395,7 @@ export const Sidebar = () => {
                                     <div key={skill.id} className="p-4 bg-zinc-800/20 rounded-lg border border-white/5 hover:border-white/10 transition-colors">
                                         <div className="flex justify-between items-start mb-3">
                                             <input
-                                                placeholder="Category"
+                                                placeholder="Category" aria-label="Category"
                                                 value={skill.category}
                                                 onChange={(e) => updateSkill(skill.id, { category: e.target.value })}
                                                 className="bg-transparent text-zinc-200 font-medium focus:outline-none border-b border-white/10 focus:border-blue-500/50 pb-1 text-sm w-full mr-2"
@@ -403,7 +409,7 @@ export const Sidebar = () => {
                                             </button>
                                         </div>
                                         <input
-                                            placeholder="Skills (comma separated)"
+                                            placeholder="Skills (comma separated)" aria-label="Skills (comma separated)"
                                             value={skill.items.join(', ')}
                                             onChange={(e) => updateSkill(skill.id, { items: e.target.value.split(',').map(s => s.trim()) })}
                                             className={inputClasses}
@@ -444,7 +450,7 @@ export const Sidebar = () => {
                                         <label className={labelClasses}>LinkedIn</label>
                                         <input
                                             type="text"
-                                            placeholder="linkedin.com/in/username"
+                                            placeholder="linkedin.com/in/username" aria-label="linkedin.com/in/username"
                                             value={resume.profile.linkedin || ''}
                                             onChange={(e) => updateProfile({ linkedin: e.target.value })}
                                             className={inputClasses}
@@ -454,7 +460,7 @@ export const Sidebar = () => {
                                         <label className={labelClasses}>GitHub</label>
                                         <input
                                             type="text"
-                                            placeholder="github.com/username"
+                                            placeholder="github.com/username" aria-label="github.com/username"
                                             value={resume.profile.github || ''}
                                             onChange={(e) => updateProfile({ github: e.target.value })}
                                             className={inputClasses}
@@ -464,7 +470,7 @@ export const Sidebar = () => {
                                         <label className={labelClasses}>Website / Portfolio</label>
                                         <input
                                             type="text"
-                                            placeholder="yourwebsite.com"
+                                            placeholder="yourwebsite.com" aria-label="yourwebsite.com"
                                             value={resume.profile.website || ''}
                                             onChange={(e) => updateProfile({ website: e.target.value })}
                                             className={inputClasses}
