@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
-import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link, Clock } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ResumeList } from './ResumeList';
 
@@ -476,6 +476,39 @@ export const Sidebar = () => {
                                             className={inputClasses}
                                         />
                                     </div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Notice Period Section */}
+            <div className="mb-4">
+                <SectionHeader
+                    title="Notice Period"
+                    icon={Clock}
+                    isOpen={activeSection === 'noticePeriod'}
+                    onClick={() => toggleSection('noticePeriod')}
+                />
+                <AnimatePresence>
+                    {activeSection === 'noticePeriod' && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="p-4 space-y-4 bg-zinc-800/20 rounded-lg border border-white/5 mb-2">
+                                <div>
+                                    <label className={labelClasses}>Notice Period</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g., Immediate, 30 Days" aria-label="Notice Period"
+                                        value={resume.profile.noticePeriod || ''}
+                                        onChange={(e) => updateProfile({ noticePeriod: e.target.value })}
+                                        className={inputClasses}
+                                    />
                                 </div>
                             </div>
                         </motion.div>

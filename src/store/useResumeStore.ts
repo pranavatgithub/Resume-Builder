@@ -50,6 +50,7 @@ const initialResume: ResumeData = {
         linkedin: '',
         github: '',
         website: '',
+        noticePeriod: '',
     },
     experience: [],
     education: [],

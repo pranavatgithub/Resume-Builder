@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
 
-import { Mail, Phone, MapPin, Linkedin } from 'lucide-react';
+import { Mail, Phone, MapPin, Linkedin, Clock, Github, Globe } from 'lucide-react';
 
 // Spacer component for PDF-safe spacing
 const Spacer = ({ size }: { size: number }) => (
@@ -118,7 +118,7 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                 {/* Right Column (Sidebar) */}
                 <div className="col-span-4">
                     {/* Contact */}
-                    {(profile.phone || profile.email || profile.location || profile.linkedin) && (
+                    {(profile.phone || profile.email || profile.location) && (
                         <section>
                             <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 pb-2 text-gray-800">Contact</h3>
                             <Spacer size={16} />
@@ -139,12 +139,6 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                                     <div className="flex items-center">
                                         <span className="w-4 h-4 mr-2 flex items-center justify-center"><MapPin size={14} /></span>
                                         <span>{profile.location}</span>
-                                    </div>
-                                )}
-                                {profile.linkedin && (
-                                    <div className="flex items-center">
-                                        <span className="w-4 h-4 mr-2 flex items-center justify-center"><Linkedin size={14} /></span>
-                                        <span className="break-all">linkedin.com</span>
                                     </div>
                                 )}
                             </div>
@@ -171,6 +165,51 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                                     </div>
                                 ))}
                             </div>
+                            <Spacer size={24} />
+                        </section>
+                    )}
+
+                    {/* Links */}
+                    {(profile.linkedin || profile.github || profile.website) && (
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 pb-2 text-gray-800">Links</h3>
+                            <Spacer size={16} />
+                            <div className="space-y-3 text-sm text-gray-600">
+                                {profile.linkedin && (
+                                    <div className="flex items-center">
+                                        <span className="w-4 h-4 mr-2 flex items-center justify-center"><Linkedin size={14} /></span>
+                                        <span className="break-all">{profile.linkedin}</span>
+                                    </div>
+                                )}
+                                {profile.github && (
+                                    <div className="flex items-center">
+                                        <span className="w-4 h-4 mr-2 flex items-center justify-center"><Github size={14} /></span>
+                                        <span className="break-all">{profile.github}</span>
+                                    </div>
+                                )}
+                                {profile.website && (
+                                    <div className="flex items-center">
+                                        <span className="w-4 h-4 mr-2 flex items-center justify-center"><Globe size={14} /></span>
+                                        <span className="break-all">{profile.website}</span>
+                                    </div>
+                                )}
+                            </div>
+                            <Spacer size={24} />
+                        </section>
+                    )}
+
+                    {/* Notice Period */}
+                    {profile.noticePeriod && (
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 pb-2 text-gray-800">Notice Period</h3>
+                            <Spacer size={16} />
+                            <div className="space-y-3 text-sm text-gray-600">
+                                <div className="flex items-center">
+                                    <span className="w-4 h-4 mr-2 flex items-center justify-center"><Clock size={14} /></span>
+                                    <span className="break-all">{profile.noticePeriod}</span>
+                                </div>
+                            </div>
+                            <Spacer size={24} />
                         </section>
                     )}
                 </div>

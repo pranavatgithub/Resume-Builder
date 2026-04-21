@@ -7,6 +7,7 @@ export interface Profile {
     linkedin?: string;
     github?: string;
     website?: string;
+    noticePeriod?: string;
     summary: string;
 }
 
