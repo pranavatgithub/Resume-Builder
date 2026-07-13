@@ -33,7 +33,8 @@ export const Sidebar = () => {
         removeSkill,
         addProject,
         updateProject,
-        removeProject
+        removeProject,
+        moveExperience
     } = useResumeStore();
 
     const resume = resumes.find(r => r.id === selectedResumeId);
@@ -172,13 +173,31 @@ export const Sidebar = () => {
                                     >
                                         <div className="flex justify-between items-start mb-3">
                                             <h4 className="font-medium text-zinc-200 text-sm">Position #{index + 1}</h4>
-                                            <button
-                                                onClick={() => removeExperience(exp.id)}
-                                                className="text-zinc-500 hover:text-red-400 transition-colors"
-                                                aria-label="Remove Experience"
-                                            >
-                                                <Trash2 size={14} />
-                                            </button>
+                                            <div className="flex items-center gap-1">
+                                                <button
+                                                    onClick={() => moveExperience(exp.id, 'up')}
+                                                    disabled={index === 0}
+                                                    className={`p-1 transition-colors ${index === 0 ? 'text-zinc-600 cursor-not-allowed' : 'text-zinc-500 hover:text-white'}`}
+                                                    aria-label="Move Experience Up"
+                                                >
+                                                    <ChevronUp size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => moveExperience(exp.id, 'down')}
+                                                    disabled={index === resume.experience.length - 1}
+                                                    className={`p-1 transition-colors ${index === resume.experience.length - 1 ? 'text-zinc-600 cursor-not-allowed' : 'text-zinc-500 hover:text-white'}`}
+                                                    aria-label="Move Experience Down"
+                                                >
+                                                    <ChevronDown size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => removeExperience(exp.id)}
+                                                    className="p-1 text-zinc-500 hover:text-red-400 transition-colors ml-1"
+                                                    aria-label="Remove Experience"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
                                         </div>
                                         <div className="space-y-3">
                                             <input

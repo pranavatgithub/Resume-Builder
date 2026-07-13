@@ -20,6 +20,7 @@ interface ResumeState {
     addExperience: () => void;
     updateExperience: (id: string, experience: Partial<Experience>) => void;
     removeExperience: (id: string) => void;
+    moveExperience: (id: string, direction: 'up' | 'down') => void;
 
     addEducation: () => void;
     updateEducation: (id: string, education: Partial<Education>) => void;
@@ -214,6 +215,23 @@ export const useResumeStore = create<ResumeState>()(
                             }
                             : r
                     ),
+                })),
+
+            moveExperience: (id, direction) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) => {
+                        if (r.id !== state.selectedResumeId) return r;
+                        const index = r.experience.findIndex((exp) => exp.id === id);
+                        if (index < 0) return r;
+                        if (direction === 'up' && index === 0) return r;
+                        if (direction === 'down' && index === r.experience.length - 1) return r;
+                        
+                        const newExperience = [...r.experience];
+                        const swapIndex = direction === 'up' ? index - 1 : index + 1;
+                        [newExperience[index], newExperience[swapIndex]] = [newExperience[swapIndex], newExperience[index]];
+                        
+                        return { ...r, experience: newExperience, updatedAt: Date.now() };
+                    }),
                 })),
 
 

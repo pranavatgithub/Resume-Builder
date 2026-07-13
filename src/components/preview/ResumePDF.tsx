@@ -200,8 +200,8 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                         {experience.length > 0 && (
                             <View style={styles.section}>
                                 <Text style={styles.sectionTitle}>Experience</Text>
-                                {experience.map((exp) => (
-                                    <View key={exp.id} style={styles.item}>
+                                {experience.map((exp, index) => (
+                                    <View key={`${exp.id}-${index}`} style={styles.item}>
                                         <View style={styles.itemHeader}>
                                             <Text style={styles.itemTitle}>{exp.title}</Text>
                                             <Text style={styles.itemDate}>{exp.startDate} - {exp.endDate}</Text>
@@ -227,8 +227,8 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                         {projects.length > 0 && (
                             <View style={styles.section}>
                                 <Text style={styles.sectionTitle}>Projects</Text>
-                                {projects.map((project) => (
-                                    <View key={project.id} style={styles.item}>
+                                {projects.map((project, index) => (
+                                    <View key={`${project.id}-${index}`} style={styles.item}>
                                         <View style={styles.itemHeader}>
                                             <Text style={styles.itemTitle}>{project.name}</Text>
                                         </View>
@@ -294,7 +294,7 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                                 <Text style={styles.sectionTitle}>Skills</Text>
                                 <View>
                                     {skills.map((skill) => (
-                                        <View key={skill.id} style={{ marginBottom: 8 }}>
+                                        <View key={skill.id} style={{ marginBottom: 6 }}>
                                             <Text style={styles.skillCategory}>{skill.category}</Text>
                                             <View style={styles.skillsContainer}>
                                                 {skill.items?.map((item, i) => (
@@ -313,8 +313,8 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                         {education.length > 0 && (
                             <View style={styles.section}>
                                 <Text style={styles.sectionTitle}>Education</Text>
-                                {education.map((edu) => (
-                                    <View key={edu.id} style={[styles.item, { marginBottom: 8 }]}>
+                                {education.map((edu, index) => (
+                                    <View key={`${edu.id}-${index}`} style={[styles.item, { marginBottom: 8 }]}>
                                         <Text style={[styles.itemTitle, { fontSize: 10, marginBottom: 1 }]}>{edu.degree}</Text>
                                         <Text style={[styles.itemSubtitle, { fontSize: 9, marginBottom: 4 }]}>{edu.institution}</Text>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', flexWrap: 'wrap', gap: 12 }}>
