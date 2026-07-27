@@ -6,6 +6,7 @@ export interface Profile {
     location: string;
     linkedin?: string;
     github?: string;
+    leetcode?: string;
     website?: string;
     noticePeriod?: string;
     summary: string;

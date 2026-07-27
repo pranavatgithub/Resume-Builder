@@ -50,6 +50,7 @@ const initialResume: ResumeData = {
         summary: 'Brief professional summary...',
         linkedin: '',
         github: '',
+        leetcode: '',
         website: '',
         noticePeriod: '',
     },

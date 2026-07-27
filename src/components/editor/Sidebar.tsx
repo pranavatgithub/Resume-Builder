@@ -126,12 +126,11 @@ export const Sidebar = () => {
                                 </div>
                                 <div>
                                     <label htmlFor="location" className={labelClasses}>Location</label>
-                                    <input
+                                    <textarea
                                         id="location"
-                                        type="text"
                                         value={resume.profile.location}
                                         onChange={(e) => updateProfile({ location: e.target.value })}
-                                        className={inputClasses}
+                                        className={`${inputClasses} h-20 resize-none`}
                                     />
                                 </div>
                                 <div>
@@ -485,7 +484,17 @@ export const Sidebar = () => {
                                             className={inputClasses}
                                         />
                                     </div>
-                                    <div className="col-span-2">
+                                    <div>
+                                        <label className={labelClasses}>LeetCode</label>
+                                        <input
+                                            type="text"
+                                            placeholder="leetcode.com/username" aria-label="leetcode.com/username"
+                                            value={resume.profile.leetcode || ''}
+                                            onChange={(e) => updateProfile({ leetcode: e.target.value })}
+                                            className={inputClasses}
+                                        />
+                                    </div>
+                                    <div className="col-span-1">
                                         <label className={labelClasses}>Website / Portfolio</label>
                                         <input
                                             type="text"
