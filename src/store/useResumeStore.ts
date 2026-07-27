@@ -14,6 +14,7 @@ interface ResumeState {
     deleteResume: (id: string) => void;
     selectResume: (id: string) => void;
     updateResumeTitle: (id: string, title: string) => void;
+    updateThemeColor: (color: string) => void;
 
     updateProfile: (profile: Partial<Profile>) => void;
 
@@ -58,6 +59,7 @@ const initialResume: ResumeData = {
     education: [],
     skills: [],
     projects: [],
+    themeColor: '#2563EB',
     createdAt: Date.now(),
     updatedAt: Date.now(),
 };
@@ -130,6 +132,13 @@ export const useResumeStore = create<ResumeState>()(
                 set((state) => ({
                     resumes: state.resumes.map((r) =>
                         r.id === id ? { ...r, title, updatedAt: Date.now() } : r
+                    ),
+                })),
+
+            updateThemeColor: (color) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId ? { ...r, themeColor: color, updatedAt: Date.now() } : r
                     ),
                 })),
 

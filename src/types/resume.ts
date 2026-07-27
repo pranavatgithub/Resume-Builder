@@ -56,6 +56,7 @@ export interface ResumeData {
     education: Education[];
     skills: Skill[];
     projects: Project[];
+    themeColor: string;
     createdAt: number;
     updatedAt: number;
 }

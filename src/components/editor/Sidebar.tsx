@@ -1,8 +1,33 @@
 import { useState } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
-import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link, Clock } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link, Clock, Palette } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ResumeList } from './ResumeList';
+
+const TAILWIND_COLORS = [
+    { name: 'Slate', value: '#475569' },
+    { name: 'Gray', value: '#4b5563' },
+    { name: 'Zinc', value: '#52525b' },
+    { name: 'Neutral', value: '#525252' },
+    { name: 'Stone', value: '#57534e' },
+    { name: 'Red', value: '#dc2626' },
+    { name: 'Orange', value: '#ea580c' },
+    { name: 'Amber', value: '#d97706' },
+    { name: 'Yellow', value: '#ca8a04' },
+    { name: 'Lime', value: '#65a30d' },
+    { name: 'Green', value: '#16a34a' },
+    { name: 'Emerald', value: '#059669' },
+    { name: 'Teal', value: '#0d9488' },
+    { name: 'Cyan', value: '#0891b2' },
+    { name: 'Sky', value: '#0284c7' },
+    { name: 'Blue', value: '#2563eb' },
+    { name: 'Indigo', value: '#4f46e5' },
+    { name: 'Violet', value: '#7c3aed' },
+    { name: 'Purple', value: '#9333ea' },
+    { name: 'Fuchsia', value: '#c026d3' },
+    { name: 'Pink', value: '#db2777' },
+    { name: 'Rose', value: '#e11d48' },
+];
 
 const SectionHeader = ({ title, icon: Icon, isOpen, onClick }: { title: string, icon: any, isOpen: boolean, onClick: () => void }) => (
     <button
@@ -34,7 +59,8 @@ export const Sidebar = () => {
         addProject,
         updateProject,
         removeProject,
-        moveExperience
+        moveExperience,
+        updateThemeColor
     } = useResumeStore();
 
     const resume = resumes.find(r => r.id === selectedResumeId);
@@ -64,6 +90,45 @@ export const Sidebar = () => {
         <div className="w-full h-full overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-zinc-700 scrollbar-track-transparent">
             <h2 className="text-xl font-bold mb-6 text-white tracking-tight">Resume Builder</h2>
             <ResumeList />
+
+            {/* Theme Section */}
+            <div className="mb-4">
+                <SectionHeader
+                    title="Theme"
+                    icon={Palette}
+                    isOpen={activeSection === 'theme'}
+                    onClick={() => toggleSection('theme')}
+                />
+                <AnimatePresence>
+                    {activeSection === 'theme' && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="p-4 bg-zinc-800/20 rounded-lg border border-white/5 mb-2">
+                                <label className={labelClasses}>Accent Color</label>
+                                <div className="grid grid-cols-6 gap-2 mt-2">
+                                    {TAILWIND_COLORS.map((color) => (
+                                        <button
+                                            key={color.value}
+                                            onClick={() => updateThemeColor(color.value)}
+                                            className={`w-8 h-8 rounded-full border-2 transition-transform ${
+                                                resume.themeColor === color.value 
+                                                    ? 'border-white scale-110 shadow-lg' 
+                                                    : 'border-transparent hover:scale-110'
+                                            }`}
+                                            style={{ backgroundColor: color.value }}
+                                            title={color.name}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
 
             {/* Profile Section */}
             <div className="mb-4">

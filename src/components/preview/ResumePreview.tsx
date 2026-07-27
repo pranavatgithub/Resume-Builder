@@ -48,8 +48,7 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                 {/* Header */}
                 <div className="border-b-2 border-gray-900">
                     <h1 className="text-4xl font-bold uppercase tracking-tight mb-2 text-gray-900">{profile.fullName}</h1>
-                    <h2 className="text-xl text-blue-600 font-medium mb-3">{profile.title}</h2>
-
+                    <h2 className="text-xl font-medium mb-3" style={{ color: resume.themeColor }}>{profile.title}</h2>
                 </div>
             </div>
 
@@ -83,7 +82,7 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                                             <h4 className="font-bold text-gray-900 leading-tight">{exp.title}</h4>
                                             <span className="text-xs text-gray-500 font-medium whitespace-nowrap">{exp.startDate} - {exp.endDate}</span>
                                         </div>
-                                        <div className="text-blue-600 text-sm font-medium mb-2">{exp.company} | {exp.location}</div>
+                                        <div className="text-sm font-medium mb-2" style={{ color: resume.themeColor }}>{exp.company} | {exp.location}</div>
                                         <ul className="list-disc list-outside ml-4 text-sm text-gray-700 space-y-1">
                                             {exp.description.map((desc, i) => (
                                                 <li key={i} className="pl-1">{desc}</li>
@@ -106,7 +105,7 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                                     <div key={edu.id}>
                                         <div className="flex flex-col mb-1">
                                             <h4 className="font-bold text-gray-900 leading-tight mb-1">{edu.degree}</h4>
-                                            <div className="text-blue-600 text-sm font-medium mb-1">{edu.institution}</div>
+                                            <div className="text-sm font-medium mb-1" style={{ color: resume.themeColor }}>{edu.institution}</div>
 
                                             <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 font-medium">
                                                 <div className="flex items-center">
