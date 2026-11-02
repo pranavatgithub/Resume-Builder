@@ -568,6 +568,16 @@ export const Sidebar = () => {
                                             className={inputClasses}
                                         />
                                     </div>
+                                    <div className="col-span-1">
+                                        <label className={labelClasses}>FreeCodeCamp</label>
+                                        <input
+                                            type="text"
+                                            placeholder="freecodecamp.org/username" aria-label="freecodecamp.org/username"
+                                            value={resume.profile.freecodecamp || ''}
+                                            onChange={(e) => updateProfile({ freecodecamp: e.target.value })}
+                                            className={inputClasses}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>

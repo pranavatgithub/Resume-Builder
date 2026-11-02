@@ -8,6 +8,7 @@ export interface Profile {
     github?: string;
     leetcode?: string;
     website?: string;
+    freecodecamp?: string;
     noticePeriod?: string;
     summary: string;
 }

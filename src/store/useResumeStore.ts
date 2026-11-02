@@ -53,6 +53,7 @@ const initialResume: ResumeData = {
         github: '',
         leetcode: '',
         website: '',
+        freecodecamp: '',
         noticePeriod: '',
     },
     experience: [],
