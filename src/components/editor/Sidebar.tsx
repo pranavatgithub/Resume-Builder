@@ -114,11 +114,10 @@ export const Sidebar = () => {
                                         <button
                                             key={color.value}
                                             onClick={() => updateThemeColor(color.value)}
-                                            className={`w-8 h-8 rounded-full border-2 transition-transform ${
-                                                resume.themeColor === color.value 
-                                                    ? 'border-white scale-110 shadow-lg' 
-                                                    : 'border-transparent hover:scale-110'
-                                            }`}
+                                            className={`w-8 h-8 rounded-full border-2 transition-transform ${resume.themeColor === color.value
+                                                ? 'border-white scale-110 shadow-lg'
+                                                : 'border-transparent hover:scale-110'
+                                                }`}
                                             style={{ backgroundColor: color.value }}
                                             title={color.name}
                                         />
@@ -195,7 +194,7 @@ export const Sidebar = () => {
                                         id="location"
                                         value={resume.profile.location}
                                         onChange={(e) => updateProfile({ location: e.target.value })}
-                                        className={`${inputClasses} h-20 resize-none`}
+                                        className={`${inputClasses} h-20 `}
                                     />
                                 </div>
                                 <div>
@@ -204,7 +203,7 @@ export const Sidebar = () => {
                                         id="summary"
                                         value={resume.profile.summary}
                                         onChange={(e) => updateProfile({ summary: e.target.value })}
-                                        className={`${inputClasses} h-32 resize-none`}
+                                        className={`${inputClasses} h-32`}
                                     />
                                 </div>
                             </div>
@@ -294,7 +293,7 @@ export const Sidebar = () => {
                                                 placeholder="Description (one item per line)" aria-label="Description (one item per line)"
                                                 value={Array.isArray(exp.description) ? exp.description.join('\n') : exp.description}
                                                 onChange={(e) => updateExperience(exp.id, { description: e.target.value.split('\n') })}
-                                                className={`${inputClasses} h-24 resize-none`}
+                                                className={`${inputClasses} h-24 `}
                                             />
                                         </div>
                                     </div>
@@ -360,7 +359,7 @@ export const Sidebar = () => {
                                                 placeholder="Description (one item per line)" aria-label="Description (one item per line)"
                                                 value={Array.isArray(project.description) ? project.description.join('\n') : project.description || ''}
                                                 onChange={(e) => updateProject(project.id, { description: e.target.value.split('\n') })}
-                                                className={`${inputClasses} h-24 resize-none`}
+                                                className={`${inputClasses} h-24 `}
                                             />
                                         </div>
                                     </div>
