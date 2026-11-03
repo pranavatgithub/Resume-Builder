@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useResumeStore } from '../../store/useResumeStore';
-import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link, Clock, Palette } from 'lucide-react';
+import { User, Briefcase, GraduationCap, Wrench, Plus, Trash2, ChevronDown, ChevronUp, Code, Link, Clock, Palette, Languages } from 'lucide-react';
+import { LANGUAGE_PROFICIENCIES } from '../../types/resume';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ResumeList } from './ResumeList';
 
@@ -32,7 +33,7 @@ const TAILWIND_COLORS = [
 const SectionHeader = ({ title, icon: Icon, isOpen, onClick }: { title: string, icon: any, isOpen: boolean, onClick: () => void }) => (
     <button
         onClick={onClick}
-        className="w-full flex items-center justify-between p-4 bg-zinc-800/30 hover:bg-zinc-800/50 border border-white/5 hover:border-white/10 transition-all rounded-lg mb-2 group"
+        className="w-full flex items-center justify-between p-4 bg-zinc-800/30 hover:bg-zinc-800/50 border border-white/5 hover:border-white/10 transition-all rounded-lg mb-2 group cursor-pointer"
     >
         <div className="flex items-center gap-3">
             <Icon size={18} className="text-blue-400 group-hover:text-blue-300 transition-colors" />
@@ -60,6 +61,10 @@ export const Sidebar = () => {
         updateProject,
         removeProject,
         moveExperience,
+        moveProject,
+        addLanguage,
+        updateLanguage,
+        removeLanguage,
         updateThemeColor
     } = useResumeStore();
 
@@ -334,13 +339,31 @@ export const Sidebar = () => {
                                     >
                                         <div className="flex justify-between items-start mb-3">
                                             <h4 className="font-medium text-zinc-200 text-sm">Project #{index + 1}</h4>
-                                            <button
-                                                onClick={() => removeProject(project.id)}
-                                                className="text-zinc-500 hover:text-red-400 transition-colors"
-                                                aria-label="Remove Project"
-                                            >
-                                                <Trash2 size={14} />
-                                            </button>
+                                            <div className="flex items-center gap-1">
+                                                <button
+                                                    onClick={() => moveProject(project.id, 'up')}
+                                                    disabled={index === 0}
+                                                    className={`p-1 transition-colors ${index === 0 ? 'text-zinc-600 cursor-not-allowed' : 'text-zinc-500 hover:text-white'}`}
+                                                    aria-label="Move Project Up"
+                                                >
+                                                    <ChevronUp size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => moveProject(project.id, 'down')}
+                                                    disabled={index === (resume.projects || []).length - 1}
+                                                    className={`p-1 transition-colors ${index === (resume.projects || []).length - 1 ? 'text-zinc-600 cursor-not-allowed' : 'text-zinc-500 hover:text-white'}`}
+                                                    aria-label="Move Project Down"
+                                                >
+                                                    <ChevronDown size={16} />
+                                                </button>
+                                                <button
+                                                    onClick={() => removeProject(project.id)}
+                                                    className="p-1 text-zinc-500 hover:text-red-400 transition-colors ml-1"
+                                                    aria-label="Remove Project"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </div>
                                         </div>
                                         <div className="space-y-3">
                                             <input
@@ -580,6 +603,72 @@ export const Sidebar = () => {
                                     </div>
                                 </div>
                             </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
+            </div>
+
+            {/* Languages Section */}
+            <div className="mb-4">
+                <SectionHeader
+                    title="Languages"
+                    icon={Languages}
+                    isOpen={activeSection === 'languages'}
+                    onClick={() => toggleSection('languages')}
+                />
+                <AnimatePresence>
+                    {activeSection === 'languages' && (
+                        <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            className="overflow-hidden"
+                        >
+                            <div className="space-y-4 mb-4">
+                                {(resume.languages || []).map((language, index) => (
+                                    <div
+                                        key={language.id}
+                                        className="p-4 bg-zinc-800/20 rounded-lg border border-white/5 hover:border-white/10 transition-colors"
+                                    >
+                                        <div className="flex justify-between items-start mb-3">
+                                            <h4 className="font-medium text-zinc-200 text-sm">Language #{index + 1}</h4>
+                                            <button
+                                                onClick={() => removeLanguage(language.id)}
+                                                className="text-zinc-500 hover:text-red-400 transition-colors"
+                                                aria-label="Remove Language"
+                                            >
+                                                <Trash2 size={14} />
+                                            </button>
+                                        </div>
+                                        <div className="space-y-3">
+                                            <input
+                                                placeholder="Language (e.g., English)" aria-label="Language name"
+                                                value={language.name}
+                                                onChange={(e) => updateLanguage(language.id, { name: e.target.value })}
+                                                className={inputClasses}
+                                            />
+                                            <select
+                                                aria-label="Proficiency"
+                                                value={language.proficiency}
+                                                onChange={(e) => updateLanguage(language.id, { proficiency: e.target.value as typeof language.proficiency })}
+                                                className={inputClasses}
+                                            >
+                                                {LANGUAGE_PROFICIENCIES.map((level) => (
+                                                    <option key={level} value={level}>
+                                                        {level}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <button
+                                onClick={addLanguage}
+                                className="w-full py-2.5 flex items-center justify-center gap-2 bg-blue-500/10 text-blue-400 rounded-lg hover:bg-blue-500/20 border border-blue-500/20 transition-all font-medium text-sm"
+                            >
+                                <Plus size={16} /> Add Language
+                            </button>
                         </motion.div>
                     )}
                 </AnimatePresence>

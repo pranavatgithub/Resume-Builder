@@ -173,7 +173,7 @@ interface ResumePDFProps {
 }
 
 export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
-    const { profile, experience, education, skills, projects = [] } = resume;
+    const { profile, experience, education, skills, projects = [], languages = [] } = resume;
 
     return (
         <Document>
@@ -381,6 +381,19 @@ export const ResumePDF: React.FC<ResumePDFProps> = ({ resume }) => {
                                         <Text style={styles.contactText}>{profile.freecodecamp}</Text>
                                     </View>
                                 )}
+                            </View>
+                        )}
+
+                        {/* Languages */}
+                        {languages.some((language) => language.name) && (
+                            <View style={styles.section}>
+                                <Text style={styles.sectionTitle}>Languages</Text>
+                                {languages.filter((language) => language.name).map((language) => (
+                                    <View key={language.id} style={[styles.itemHeader, { marginBottom: 6 }]}>
+                                        <Text style={[styles.contactText, { color: '#111827', fontWeight: 500 }]}>{language.name}</Text>
+                                        <Text style={styles.itemDate}>{language.proficiency}</Text>
+                                    </View>
+                                ))}
                             </View>
                         )}
 

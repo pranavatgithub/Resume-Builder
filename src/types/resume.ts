@@ -47,7 +47,24 @@ export interface Project {
     techStack: string;
 }
 
-export type SectionType = 'profile' | 'summary' | 'experience' | 'education' | 'skills' | 'projects' | 'custom';
+export const LANGUAGE_PROFICIENCIES = [
+    'Native Speaker',
+    'Fluent',
+    'Advanced',
+    'Intermediate',
+    'Conversational',
+    'Beginner',
+] as const;
+
+export type LanguageProficiency = (typeof LANGUAGE_PROFICIENCIES)[number];
+
+export interface Language {
+    id: string;
+    name: string;
+    proficiency: LanguageProficiency;
+}
+
+export type SectionType = 'profile' | 'summary' | 'experience' | 'education' | 'skills' | 'projects' | 'languages' | 'custom';
 
 export interface ResumeData {
     id: string;
@@ -57,6 +74,7 @@ export interface ResumeData {
     education: Education[];
     skills: Skill[];
     projects: Project[];
+    languages: Language[];
     themeColor: string;
     createdAt: number;
     updatedAt: number;

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { ResumeData, Experience, Education, Skill, Profile, Project } from '../types/resume';
+import type { ResumeData, Experience, Education, Skill, Profile, Project, Language } from '../types/resume';
 import { v4 as uuidv4 } from 'uuid';
 
 interface ResumeState {
@@ -34,6 +34,11 @@ interface ResumeState {
     addProject: () => void;
     updateProject: (id: string, project: Partial<Project>) => void;
     removeProject: (id: string) => void;
+    moveProject: (id: string, direction: 'up' | 'down') => void;
+
+    addLanguage: () => void;
+    updateLanguage: (id: string, language: Partial<Language>) => void;
+    removeLanguage: (id: string) => void;
 
     setResume: (data: ResumeData) => void;
     resetResume: () => void;
@@ -60,6 +65,7 @@ const initialResume: ResumeData = {
     education: [],
     skills: [],
     projects: [],
+    languages: [],
     themeColor: '#2563EB',
     createdAt: Date.now(),
     updatedAt: Date.now(),
@@ -381,6 +387,69 @@ export const useResumeStore = create<ResumeState>()(
                             ? {
                                 ...r,
                                 projects: (r.projects || []).filter((p) => p.id !== id),
+                            }
+                            : r
+                    ),
+                })),
+
+            moveProject: (id, direction) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) => {
+                        if (r.id !== state.selectedResumeId) return r;
+                        const projects = r.projects || [];
+                        const index = projects.findIndex((p) => p.id === id);
+                        if (index < 0) return r;
+                        if (direction === 'up' && index === 0) return r;
+                        if (direction === 'down' && index === projects.length - 1) return r;
+
+                        const newProjects = [...projects];
+                        const swapIndex = direction === 'up' ? index - 1 : index + 1;
+                        [newProjects[index], newProjects[swapIndex]] = [newProjects[swapIndex], newProjects[index]];
+
+                        return { ...r, projects: newProjects, updatedAt: Date.now() };
+                    }),
+                })),
+
+            addLanguage: () =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                languages: [
+                                    ...(r.languages || []),
+                                    {
+                                        id: uuidv4(),
+                                        name: '',
+                                        proficiency: 'Fluent',
+                                    },
+                                ],
+                            }
+                            : r
+                    ),
+                })),
+
+            updateLanguage: (id, language) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                languages: (r.languages || []).map((lang) =>
+                                    lang.id === id ? { ...lang, ...language } : lang
+                                ),
+                            }
+                            : r
+                    ),
+                })),
+
+            removeLanguage: (id) =>
+                set((state) => ({
+                    resumes: state.resumes.map((r) =>
+                        r.id === state.selectedResumeId
+                            ? {
+                                ...r,
+                                languages: (r.languages || []).filter((lang) => lang.id !== id),
                             }
                             : r
                     ),

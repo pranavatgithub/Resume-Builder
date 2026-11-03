@@ -233,6 +233,23 @@ export const ResumePreview = forwardRef<HTMLDivElement>((_props, ref) => {
                         </section>
                     )}
 
+                    {/* Languages */}
+                    {(resume.languages || []).some((language) => language.name) && (
+                        <section>
+                            <h3 className="text-sm font-bold uppercase tracking-widest border-b border-gray-300 pb-2 text-gray-800">Languages</h3>
+                            <Spacer size={16} />
+                            <div className="space-y-3 text-sm">
+                                {(resume.languages || []).filter((language) => language.name).map((language) => (
+                                    <div key={language.id} className="flex items-baseline justify-between gap-2">
+                                        <span className="font-medium text-gray-900">{language.name}</span>
+                                        <span className="text-xs text-gray-500 font-medium whitespace-nowrap">{language.proficiency}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <Spacer size={24} />
+                        </section>
+                    )}
+
                     {/* Notice Period */}
                     {profile.noticePeriod && (
                         <section>
